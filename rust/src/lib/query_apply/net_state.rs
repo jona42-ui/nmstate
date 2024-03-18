@@ -286,15 +286,15 @@ impl NetworkState {
             if let Some(h) = self.hostname.as_mut() {
                 h.update(other_hostname);
             } else {
-                self.hostname = other.hostname.clone();
+                self.hostname.clone_from(&other.hostname);
             }
         }
         self.interfaces.update(&other.interfaces);
         if other.dns.is_some() {
-            self.dns = other.dns.clone();
+            self.dns.clone_from(&other.dns);
         }
         if other.ovsdb.is_some() {
-            self.ovsdb = other.ovsdb.clone();
+            self.ovsdb.clone_from(&other.ovsdb);
         }
         if !other.ovn.is_none() {
             self.ovn = other.ovn.clone();
@@ -375,8 +375,11 @@ impl MergedNetworkState {
             .filter(|(_, t)| !t.is_userspace())
             .map(|(n, _)| n.as_str())
             .collect();
-        self.routes
-            .verify(&current.routes, ignored_kernel_ifaces.as_slice())?;
+        self.routes.verify(
+            &current.routes,
+            ignored_kernel_ifaces.as_slice(),
+            &current.interfaces,
+        )?;
         self.rules
             .verify(&current.rules, ignored_kernel_ifaces.as_slice())?;
         self.dns.verify(current.dns.clone().unwrap_or_default())?;
