@@ -1,6 +1,6 @@
 [package]
 name = "nmstate"
-version = "2.2.28"
+version = "2.2.29"
 authors = ["Gris Ge <fge@redhat.com>"]
 description = "Library for networking management in a declarative manner"
 license = "Apache-2.0"
@@ -9,7 +9,7 @@ documentation = "https://nmstate.io"
 repository = "https://github.com/nmstate/nmstate"
 keywords = ["network", "linux"]
 categories = ["network-programming", "os::linux-apis"]
-rust-version = "1.60"
+rust-version = "1.66"
 edition = "2021"
 
 [lib]
